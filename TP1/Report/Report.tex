@@ -130,10 +130,11 @@ ssh          & sshv2  & TCP & 22    & 20 \\ \hline
 \end{figure}
 
 \chapter{Questão 2}
-
-\section{Uma representação num diagrama temporal das transferências da file1 por FTP e TFTP respetivamente. Se for caso disso,
-identifique as fases de estabelecimento de conexão, transferência de dados e fim de conexão. Identifica também claramente
-os tipos de segmentos trocados e os números de sequência usados quer nos dados como nas confirmações.}
+\textbf{Uma representação num diagrama temporal das transferências da file1 por
+FTP e TFTP respetivamente. Se for caso disso, identifique as fases de
+estabelecimento de conexão, transferência de dados e fim de conexão. Identifica
+também claramente os tipos de segmentos trocados e os números de sequência
+usados quer nos dados como nas confirmações.}
 
 \begin{figure}[H]
     \centering 
@@ -145,7 +146,7 @@ os tipos de segmentos trocados e os números de sequência usados quer nos dados
 \begin{figure}[H]
     \centering 
     \includegraphics[width=0.6\textwidth]{images/diagrama.png}  
-    \caption{Diagrama Temporal}
+    \caption{FTP- Diagrama Temporal}
     \label{fig:diagrama}
 \end{figure}
 
@@ -159,100 +160,84 @@ os tipos de segmentos trocados e os números de sequência usados quer nos dados
 \begin{figure}[H]
     \centering 
     \includegraphics[width=0.6\textwidth]{images/diagrama2.png}  
-    \caption{Diagrama Temporal}
+    \caption{TFTP - Diagrama Temporal}
     \label{fig:diagrama2}
 \end{figure}
 
 \chapter{Questão 3}
+\textbf{Com base nas experiências realizadas, distinga e compare sucintamente as
+quatro aplicações de transferência de ficheiros que usou nos seguintes pontos
+(i) uso da camada de transporte; (ii) eficiência na transferência; (iii)
+complexidade; (iv) segurança;}
 
-\section{Com base nas experiências realizadas, distinga e compare sucintamente as quatro aplicações de transferência de ficheiros que
-usou nos seguintes pontos (i) uso da camada de transporte; (ii) eficiência na transferência; (iii) complexidade; (iv) segurança;}
-
-\subsection{SFTP}
-
-\subsubsection{Uso da camada de transporte}
-
+\section{SFTP}
+\subsection{Uso da camada de transporte}
 Protocolo TCP.
 
-\subsubsection{Eficiência na transferência}
-
+\subsection{Eficiência na transferência}
 Devido à sua fiabilidade não é muito eficiente.
 
-\subsubsection{Complexidade}
-
+\subsection{Complexidade}
 Disponibiliza várias funcionalidades. logo torna-se muito complexo.
 
-\subsubsection{Segurança}
+\subsection{Segurança}
+Recorre à autenticação e à encriptação dos dados, ou seja pode se dizer que é
+seguro.
 
-Recorre à autenticação e à encriptação dos dados, ou seja pode se dizer que é seguro.
-
-\subsection{FTP}
-
-\subsubsection{Uso da camada de transporte}
-
+\section{FTP}
+\subsection{Uso da camada de transporte}
 Protocolo TCP.
 
-\subsubsection{Eficiência na transferência}
-
+\subsection{Eficiência na transferência}
 Tem um maior overhead e isso deve-se a ser fiável.
 
-\subsubsection{Complexidade}
-
+\subsection{Complexidade}
 Sendo que garante a segurança de transferência de dados, torna-se complexo.
 
-\subsubsection{Segurança}
-
+\subsection{Segurança}
 É pouco seguro, contudo utiliza autenticação.
 
-\subsection{TFTP}
-
-\subsubsection{Uso da camada de transporte}
-
+\section{TFTP}
+\subsection{Uso da camada de transporte}
 Protocolo UDP.
 
-\subsubsection{Eficiência na transferência}
-
+\subsection{Eficiência na transferência}
 Possui um overhead menor não se responsabilizando pela entrega dos dados.
 
-\subsubsection{Complexidade}
+\subsection{Complexidade}
+Sendo que utiliza um protocolo UDP, as funcionalidades existentes não são
+várias, logo não é muito complexo.
 
-Sendo que utiliza um protocolo UDP, as funcionalidades existentes não são várias, logo não é muito complexo.
+\subsection{Segurança}
+Não utiliza qualquer mecanismo de autenticação ou encriptação, sendo assim pouco
+seguro.
 
-\subsubsection{Segurança}
-
-Não utiliza qualquer mecanismo de autenticação ou encriptação, sendo assim pouco seguro.
-
-\subsection{HTTP}
-
-\subsubsection{Uso da camada de transporte}
-
+\section{HTTP}
+\subsection{Uso da camada de transporte}
 Protocolo TCP.
 
-\subsubsection{Eficiência na transferência}
-
+\subsection{Eficiência na transferência}
 Possui uma grande eficiência.
 
-\subsubsection{Complexidade}
-
+\subsection{Complexidade}
 Mesmo utilizando um protocolo TCP, trata-se de uma aplicação pouco complexa.
 
-\subsubsection{Segurança}
-
+\subsection{Segurança}
 Sendo que só utiliza autenticação, não é muito seguro.
 
 \chapter{Questão 4}
-
-\section{As características das ligações de rede têm uma enorme influência nos níveis de Transporte e de Aplicação. Discuta,
-relacionando a resposta com as experiências realizadas, as influências das situações de perda ou duplicação de pacotes IP no
-desempenho global de Aplicações fiáveis (se possível, relacionando com alguns dos mecanismos de transporte envolvidos).}
+\textbf{As características das ligações de rede têm uma enorme influência nos
+níveis de Transporte e de Aplicação. Discuta, relacionando a resposta com as
+experiências realizadas, as influências das situações de perda ou duplicação de
+pacotes IP no desempenho global de Aplicações fiáveis (se possível, relacionando
+com alguns dos mecanismos de transporte envolvidos).}
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/4.png}  
+    \includegraphics[width=0.7\textwidth]{images/4.png}  
     \caption{Ping}
     \label{fig:4}
 \end{figure}
-
 Observando a figura \ref{fig:4}, podemos ver que existiu 15\% de perda de pacotes e 1 foi duplicado. Maior parte das vezes isto
 deve-se a existirem problemas ao nível da ligação de rede. Quando se trata de protocolos de transporte existem dois principais
 que tratam deste problema de formas diferentes, sendo eles TCP e UDP. O primeiro é o mais complexo devido a utilizar mecanismos
@@ -264,12 +249,14 @@ corretamente recebidos. No entanto, sendo pouco complexo não existe muito contr
 que os protocolos acima do UDP identifiquem e corrijam o problema.
 
 \chapter{Conclusão}
-
-Na realização deste trabalho concluimos que maior parte dos conteúdos lecionados nas aulas teóricas foram colocados em prática.
-Na primeira parte foram vistos e aplicados vários protocolos de transporte e aplicacionais.
-Já na segunda, os conceitos TCP e UDP receberam uma maior atenção garantindo que a nossa perceção dos mesmos ficasse clara.
-As principais ferramentas utilizadas para que isto fosse possível foram o Core e o Wireshark, sendo que maior parte do tempo
-utilizado para este TP foi na análise de tráfego colocando em uso os vários protocolos de Aplicação e Transporte.
-
-
+Na realização deste trabalho concluimos que maior parte dos conteúdos lecionados
+nas aulas teóricas foram colocados em prática.\\
+Na primeira parte foram vistos e aplicados vários protocolos de transporte e
+aplicacionais.\\
+Já na segunda, os conceitos TCP e UDP receberam uma maior atenção garantindo que
+a nossa perceção dos mesmos ficasse clara.\\
+As principais ferramentas utilizadas para que isto fosse possível foram o Core e
+o Wireshark, sendo que maior parte do tempo utilizado para este TP foi na
+análise de tráfego colocando em uso os vários protocolos de Aplicação e
+Transporte.
 \end{document}
