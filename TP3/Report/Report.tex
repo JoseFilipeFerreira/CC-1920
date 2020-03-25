@@ -1,0 +1,101 @@
+\documentclass[a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{hyperref}
+\usepackage{a4wide}
+\hypersetup{pdftitle={CC - TP01},
+pdfauthor={João Teixeira, José Ferreira, Miguel Solino},
+colorlinks=true,
+urlcolor=blue,
+linkcolor=black}
+\usepackage{subcaption}
+\usepackage[cache=false]{minted}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{appendix}
+\usepackage{tikz}
+\usepackage{authblk}
+\usepackage{bashful}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikz,fullpage}
+\usepackage{pgfgantt}
+\usetikzlibrary{arrows,%
+                petri,%
+                topaths}%
+\usepackage{tkz-berge}
+\usetikzlibrary{positioning,automata,decorations.markings}
+\AfterEndEnvironment{figure}{\noindent\ignorespaces}
+\AfterEndEnvironment{table}{\noindent\ignorespaces}
+
+\begin{document}
+
+\title{Comunicação por Computadores\\ 
+\large Fase 3 - Grupo 7}
+\author{José Ferreira (A83683) \and João Teixeira (A85504) \and Miguel Solino (A86435)}
+\date{\today}
+
+\begin{center}
+    \begin{minipage}{0.75\linewidth}
+        \centering
+        \includegraphics[width=0.4\textwidth]{images/eng.jpeg}\par\vspace{1cm}
+        \vspace{1.5cm}
+        \href{https://www.uminho.pt/PT}
+        {\color{black}{\scshape\LARGE Universidade do Minho}} \par
+        \vspace{1cm}
+        \href{https://www.di.uminho.pt/}
+        {\color{black}{\scshape\Large Departamento de Informática}} \par
+        \vspace{1.5cm}
+        \maketitle
+    \end{minipage}
+\end{center}
+
+\chapter{Parte 1}
+\section{Pergunta a}
+\textbf{Qual o conteúdo do ficheiro /etc/resolv.conf e para que serve essa
+informação?}
+
+\section{Pergunta b}
+\textbf{Os servidores www.sapo.pt. e www.yahoo.com. têm endereços IPv6? Se sim,
+quais?}
+
+\section{Pergunta c}
+\textbf{Quais os servidores de nomes definidos para os domínios: “uminho.pt.”,
+“pt.” e “.”?}
+
+\section{Pergunta d}
+\textbf{Existe o domínio nice.software.? Será que nice.software. é um host ou um
+domínio ?}
+
+\section{Pergunta e}
+\textbf{Qual é o servidor DNS primário definido para o domínio msf.org.? Este
+servidor primário (master) aceita queries recursivas? Porquê?}
+
+\section{Pergunta f}
+\textbf{Obtenha uma resposta “autoritativa” para a questão anterior.}
+
+\section{Pergunta g}
+\textbf{Onde são entregues as mensagens de correio eletrónico dirigidas aos
+presidentes marcelo@presidencia.pt e bolsonaro@casacivil.gov.br?}
+
+\section{Pergunta h}
+\textbf{Que informação é possível obter, via DNS, acerca de whitehouse.gov?}
+
+\section{Pergunta i}
+\textbf{Consegue interrogar o DNS sobre o endereço IPv6
+2001:690:a00:1036:1113::247 usando algum dos clientes DNS? Que informação
+consegue obter? Supondo que teve problemas com esse endereço, consegue obter um
+contacto do responsável por esse IPv6?}
+
+\section{Pergunta j}
+\textbf{Os secundários usam um mecanismo designado por “Transferência de zona”
+para se atualizarem automaticamente a partir do primário, usando os parâmetros
+definidos no Record do tipo SOA do domínio. Descreve sucintamente esse mecanismo
+com base num exemplo concreto (ex: di.uminho.pt ou o domínio cc.pt que vai ser
+criado na topologia virtual).}
+
+\chapter{Parte 2}
+
+\end{document}
