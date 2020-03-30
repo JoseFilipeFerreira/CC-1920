@@ -58,56 +58,78 @@ linkcolor=black}
 informação?}
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/resolv.png}  
+    \includegraphics[width=0.7\textwidth]{images/resolv.png}  
     \caption{/etc/resolv.conf}
     \label{fig:resolv}
 \end{figure}
 
+O ficheiro /etc/resolv.conf contém as informações relativas aos servidores
+de DNS.
+
 \section{Pergunta b}
 \textbf{Os servidores www.sapo.pt. e www.yahoo.com. têm endereços IPv6? Se sim,
 quais?}
+
+Para sabermos quais são os endereços IPv6 dos servidores, utilizamos o comando
+host.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/sapopt.png}  
+    \includegraphics[width=0.7\textwidth]{images/sapopt.png}  
     \caption{sapos.pt}
     \label{fig:sapopt}
 \end{figure}
 
+Como podemos reparar na figura \ref{fig:sapopt}, o servidor www.sapo.pt tem o endereço 
+IPv6 2001:8a0:2102:c:213:13:146:142,
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/yahoocom.png}  
+    \includegraphics[width=0.7\textwidth]{images/yahoocom.png}  
     \caption{yahoo.com}
     \label{fig:yahoocom}
 \end{figure}
 
+O servidor www.yahoo.com tem o endereço IPv6 2a00:1288:110:1c, como é
+possível verificar na figura \ref{fig:yahoocom}.
 
 \section{Pergunta c}
 \textbf{Quais os servidores de nomes definidos para os domínios: “uminho.pt.”,
 “pt.” e “.”?}
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/uminhopt.png}  
+    \includegraphics[width=0.5\textwidth]{images/uminhopt.png}  
     \caption{uminho.pt}
     \label{fig:uminhopt}
 \end{figure}
 
+Como podemos observar na figura \ref{fig:uminhopt}, para os servidores de nome 
+definidos como "uminho.pt" são dns.uminho.pt.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/ptponto.png}  
+    \includegraphics[width=0.5\textwidth]{images/ptponto.png}  
     \caption{pt.}
     \label{fig:ptponto}
 \end{figure}
 
+Para os servidores de nome definidos como "pt." são curiosity.dns.pt
+(figura \ref{fig:ptponto}).
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/ponto.png}  
+    \includegraphics[width=0.5\textwidth]{images/ponto.png}  
     \caption{.}
     \label{fig:ponto}
 \end{figure}
 
+E para os servidores de nome definidos como "." são a.root-servers.net
+(figura \ref{fig:ponto}).
+
 \section{Pergunta d}
 \textbf{Existe o domínio nice.software.? Será que nice.software. é um host ou um
 domínio ?}
+
 \begin{figure}[H]
     \centering 
     \includegraphics[width=\textwidth]{images/nicesoftware.png}  
@@ -115,15 +137,24 @@ domínio ?}
     \label{fig:nicesoftware}
 \end{figure}
 
+Sendo que, como podemos observar na figura \ref{fig:nicesoftware}, através do nslookup
+obtemos endereços de IP, então este dominio existe e é um host.
+
 \section{Pergunta e}
 \textbf{Qual é o servidor DNS primário definido para o domínio msf.org.? Este
 servidor primário (master) aceita queries recursivas? Porquê?}
+
 \begin{figure}[H]
     \centering 
     \includegraphics[width=\textwidth]{images/dnsprimario.png}  
     \caption{DNS primário}
     \label{fig:dnsprimario}
 \end{figure}
+
+Para obtermos o DNS primário utilizamos o comando nslookup com uma query
+do tipo soa. O resultado está apresentado na figura \ref{fig:dnsprimario} e
+como podemos ver está definido como ns1.dds.nl.
+
 \begin{figure}[H]
     \centering 
     \includegraphics[width=\textwidth]{images/recursivo.png}  
@@ -131,8 +162,15 @@ servidor primário (master) aceita queries recursivas? Porquê?}
     \label{fig:recursivo}
 \end{figure}
 
+Com o intuito de testar a recursividade, voltamos a usar o comando nslookup
+mas desta vez com o DNS primário. Na figura \ref{fig:recursivo}, não obtivemos
+resposta nem do DNS primário para msf.org nem do uminho.pt para o DNS primário.
+No entanto, do msf.org para o DNS primário foi obtida uma resposta. Sendo assim
+podemos concluir que este não é recursivo.
+
 \section{Pergunta f}
 \textbf{Obtenha uma resposta “autoritativa” para a questão anterior.}
+
 \begin{figure}[H]
     \centering 
     \includegraphics[width=\textwidth]{images/autoritativa.png}  
