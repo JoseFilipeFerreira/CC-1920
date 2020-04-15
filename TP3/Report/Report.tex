@@ -132,7 +132,7 @@ domínio ?}
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/nicesoftware.png}  
+    \includegraphics[width=0.8\textwidth]{images/nicesoftware.png}  
     \caption{nice.software.}
     \label{fig:nicesoftware}
 \end{figure}
@@ -146,7 +146,7 @@ servidor primário (master) aceita queries recursivas? Porquê?}
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/dnsprimario.png}  
+    \includegraphics[width=0.8\textwidth]{images/dnsprimario.png}  
     \caption{DNS primário}
     \label{fig:dnsprimario}
 \end{figure}
@@ -157,7 +157,7 @@ como podemos ver está definido como ns1.dds.nl.
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/recursivo.png}  
+    \includegraphics[width=0.8\textwidth]{images/recursivo.png}  
     \caption{teste de recursividade}
     \label{fig:recursivo}
 \end{figure}
@@ -171,10 +171,12 @@ podemos concluir que este não é recursivo.
 \section{Pergunta f}
 \textbf{Obtenha uma resposta “autoritativa” para a questão anterior.}
 
+Não foi possível obter uma resposta autoritativa.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/autoritativa.png}  
-    \caption{autoritativa}
+    \includegraphics[width=0.8\textwidth]{images/autoritativa.png}  
+    \caption{Tentativa de resposta autoritativa}
     \label{fig:autoritativa}
 \end{figure}
 
@@ -182,25 +184,40 @@ podemos concluir que este não é recursivo.
 \textbf{Onde são entregues as mensagens de correio eletrónico dirigidas aos
 presidentes marcelo@presidencia.pt e bolsonaro@casacivil.gov.br?}
 
+Como é possível ver na figura \ref{fig:presidencia.pt}, as mensagens são
+entregues nos servidores mail1.presidencia.pt e mail2.presidencial.pt, 
+sendo entregues preferencialmente no primeiro por o grau de preferência
+ser superior.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/presidencia_pt.png}  
+    \includegraphics[width=0.8\textwidth]{images/presidencia_pt.png}  
     \caption{presidencia.pt}
     \label{fig:presidencia.pt}
 \end{figure}
 
+Relativamente ao Bolsonaro, obersvando a figura \ref{fig:casacivil.gov.br},
+as mensagens são entregues nos servidores esa01.presidencia.gov.br e 
+esa02.presidencia.gov.br, sendo também entregues preferencialmente no primeiro
+devido ao grau de preferência.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/casacivil_gov_br.png}  
+    \includegraphics[width=0.8\textwidth]{images/casacivil_gov_br.png}  
     \caption{casacivil.gov.br}
     \label{fig:casacivil.gov.br}
 \end{figure}
 
 \section{Pergunta h}
 \textbf{Que informação é possível obter, via DNS, acerca de whitehouse.gov?}
+
+Para obter o maior número de informações, via DNS, acerca de whitehouse.gov
+utilizamos o comando nslookup e o resultado está presente na figura 
+\ref{fig:www.whitehouse.gov}.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/withehouse_gov.png}  
+    \includegraphics[width=0.8\textwidth]{images/withehouse_gov.png}  
     \caption{www.whitehouse.gov}
     \label{fig:www.whitehouse.gov}
 \end{figure}
@@ -210,24 +227,27 @@ presidentes marcelo@presidencia.pt e bolsonaro@casacivil.gov.br?}
 2001:690:a00:1036:1113::247 usando algum dos clientes DNS? Que informação
 consegue obter? Supondo que teve problemas com esse endereço, consegue obter um
 contacto do responsável por esse IPv6?}
+
+Analisando a figura abaixo, verificamos que é possivel interrogar o DNS usando o
+cliente DNS nslookup, no entanto obtemos poucas informações e uma reposta não
+autoritativa.
+
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/nslookup_ipv6.png}  
+    \includegraphics[width=0.8\textwidth]{images/nslookup_ipv6.png}  
     \caption{interrogação nslookup com endereço IPv6}
     \label{fig:nslookup_ipv6}
 \end{figure}
 
-\begin{figure}[H]
-    \centering 
-    \includegraphics[width=\textwidth]{images/nslookup_ipv6.png}  
-    \caption{interrogação nslookup com endereço IPv6}
-    \label{fig:nslookup_ipv6}
-\end{figure}
+Com o objetivo de obter um contacto responsáve pelo IPv6, utilizamos
+o comando nslookup com uma query do tipo SOA. Observando o resultado
+na figura abaixo, reparamos que o contacto responsável por esse IPv6 
+é o ns01.fccn.pt.
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[width=\textwidth]{images/fccn_pt.png}  
-    \caption{pls change}
+    \includegraphics[width=0.7\textwidth]{images/fccn_pt.png}  
+    \caption{}
     \label{fig:fccn_pt}
 \end{figure}
 
@@ -238,6 +258,86 @@ definidos no Record do tipo SOA do domínio. Descreve sucintamente esse mecanism
 com base num exemplo concreto (ex: di.uminho.pt ou o domínio cc.pt que vai ser
 criado na topologia virtual).}
 
+Através do mecanismo de transferência de zona permite que se replique a base de 
+dados do servidor primário para o secundário. Para isso, o servidor primário
+será requisitado pelo secundário para fazer essa transferência. Analisando os 
+campos que nos é mostrado no Record do SOA do dominio di.uminho.pt, conseguirá
+aceder ao número de série e parâmetros temporais da base de dados para a sua 
+atualização. Se o número de série for o mesmo então teremos que recorrer 
+à utilização da query AXFR, conseguindo a informação dos masters. Algo importante
+de ser referido é o parâmetro "retry" quando realizamos a query do tipo SOA. 
+Esse campo diz nos o tempo em segundos que demorará o slave a voltar a tentar 
+caso algo falhe.
+
 \chapter{Parte 2}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/primary_ncl.png}  
+    \caption{primario/named.conf.local}
+    \label{fig:primary_ncl}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/dbccpt.png}  
+    \caption{primario/db.cc.pt}
+    \label{fig:dbccpt}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/dbrev.png}  
+    \caption{primario/db.3-3-10.rev}
+    \label{fig:dbrev}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/secondary_ncl.png}  
+    \caption{secundario/named.conf.local}
+    \label{fig:secondary_nncl}
+\end{figure}
+
+\section{Testes}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/ns_outcore.png}  
+    \caption{nslookup fora da topologia core}
+    \label{fig:ns_outcore}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/nslookup_portatil1.png}  
+    \caption{nslookup feito a partir do portátil 1}
+    \label{fig:nslookup_portatil1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/nslookup_resolv.png}  
+    \caption{nslookup após alteração do resolv.conf}
+    \label{fig:nslookup_resolv}
+\end{figure}
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=0.8\textwidth]{images/nslookup_secondario.png}  
+    \caption{nslookup secundário}
+    \label{fig:nslookup_resolv}
+\end{figure}
+
+\chapter{Conclusão}
+
+Através da realização deste trabalho foi nos possível reforçar e aprofundar
+o nosso conhecimento relativamente à área de serviço de resolução de nomes 
+(DNS). No decorrer desta TP foi nos pedido para colocar em prática os 
+conceitos aprendidos nas aulas teóricas.
+Comparando as duas partes deste trabalho prático, a que se mostrou mais 
+dificil de realizar foi a segunda parte, pois foi o primeiro contacto que
+tivemos com esta área. Contudo, achamos que conseguimos realizar todas as
+tarefas com sucesso sendo que todas as funcionalidades estão implementadas.
 
 \end{document}
