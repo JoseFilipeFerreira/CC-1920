@@ -56,30 +56,28 @@ linkcolor=black}
 \section{Pergunta a}
 \textbf{Qual o conteúdo do ficheiro /etc/resolv.conf e para que serve essa
 informação?}
+
 \begin{figure}[H]
     \centering 
     \includegraphics[width=0.7\textwidth]{images/resolv.png}  
     \caption{/etc/resolv.conf}
     \label{fig:resolv}
 \end{figure}
-
 O ficheiro /etc/resolv.conf contém as informações relativas aos servidores
 de DNS.
 
 \section{Pergunta b}
 \textbf{Os servidores www.sapo.pt. e www.yahoo.com. têm endereços IPv6? Se sim,
-quais?}
-
+quais?}\\
 Para sabermos quais são os endereços IPv6 dos servidores, utilizamos o comando
 host.
 
 \begin{figure}[H]
     \centering 
     \includegraphics[width=0.7\textwidth]{images/sapopt.png}  
-    \caption{sapos.pt}
+    \caption{sapo.pt}
     \label{fig:sapopt}
 \end{figure}
-
 Como podemos reparar na figura \ref{fig:sapopt}, o servidor www.sapo.pt tem o endereço 
 IPv6 2001:8a0:2102:c:213:13:146:142,
 
@@ -89,7 +87,6 @@ IPv6 2001:8a0:2102:c:213:13:146:142,
     \caption{yahoo.com}
     \label{fig:yahoocom}
 \end{figure}
-
 O servidor www.yahoo.com tem o endereço IPv6 2a00:1288:110:1c, como é
 possível verificar na figura \ref{fig:yahoocom}.
 
@@ -102,7 +99,6 @@ possível verificar na figura \ref{fig:yahoocom}.
     \caption{uminho.pt}
     \label{fig:uminhopt}
 \end{figure}
-
 Como podemos observar na figura \ref{fig:uminhopt}, para os servidores de nome 
 definidos como "uminho.pt" são dns.uminho.pt.
 
@@ -112,7 +108,6 @@ definidos como "uminho.pt" são dns.uminho.pt.
     \caption{pt.}
     \label{fig:ptponto}
 \end{figure}
-
 Para os servidores de nome definidos como "pt." são curiosity.dns.pt
 (figura \ref{fig:ptponto}).
 
@@ -122,7 +117,6 @@ Para os servidores de nome definidos como "pt." são curiosity.dns.pt
     \caption{.}
     \label{fig:ponto}
 \end{figure}
-
 E para os servidores de nome definidos como "." são a.root-servers.net
 (figura \ref{fig:ponto}).
 
@@ -136,7 +130,6 @@ domínio ?}
     \caption{nice.software.}
     \label{fig:nicesoftware}
 \end{figure}
-
 Sendo que, como podemos observar na figura \ref{fig:nicesoftware}, através do nslookup
 obtemos endereços de IP, então este dominio existe e é um host.
 
@@ -150,7 +143,6 @@ servidor primário (master) aceita queries recursivas? Porquê?}
     \caption{DNS primário}
     \label{fig:dnsprimario}
 \end{figure}
-
 Para obtermos o DNS primário utilizamos o comando nslookup com uma query
 do tipo soa. O resultado está apresentado na figura \ref{fig:dnsprimario} e
 como podemos ver está definido como ns1.dds.nl.
@@ -161,7 +153,6 @@ como podemos ver está definido como ns1.dds.nl.
     \caption{teste de recursividade}
     \label{fig:recursivo}
 \end{figure}
-
 Com o intuito de testar a recursividade, voltamos a usar o comando nslookup
 mas desta vez com o DNS primário. Na figura \ref{fig:recursivo}, não obtivemos
 resposta nem do DNS primário para msf.org nem do uminho.pt para o DNS primário.
@@ -169,8 +160,7 @@ No entanto, do msf.org para o DNS primário foi obtida uma resposta. Sendo assim
 podemos concluir que este não é recursivo.
 
 \section{Pergunta f}
-\textbf{Obtenha uma resposta “autoritativa” para a questão anterior.}
-
+\textbf{Obtenha uma resposta “autoritativa” para a questão anterior.}\\
 Não foi possível obter uma resposta autoritativa.
 
 \begin{figure}[H]
@@ -182,8 +172,7 @@ Não foi possível obter uma resposta autoritativa.
 
 \section{Pergunta g}
 \textbf{Onde são entregues as mensagens de correio eletrónico dirigidas aos
-presidentes marcelo@presidencia.pt e bolsonaro@casacivil.gov.br?}
-
+presidentes marcelo@presidencia.pt e bolsonaro@casacivil.gov.br?}\\
 Como é possível ver na figura \ref{fig:presidencia.pt}, as mensagens são
 entregues nos servidores mail1.presidencia.pt e mail2.presidencial.pt, 
 sendo entregues preferencialmente no primeiro por o grau de preferência
@@ -195,8 +184,7 @@ ser superior.
     \caption{presidencia.pt}
     \label{fig:presidencia.pt}
 \end{figure}
-
-Relativamente ao Bolsonaro, obersvando a figura \ref{fig:casacivil.gov.br},
+Relativamente ao Bolsonaro, observando a figura \ref{fig:casacivil.gov.br},
 as mensagens são entregues nos servidores esa01.presidencia.gov.br e 
 esa02.presidencia.gov.br, sendo também entregues preferencialmente no primeiro
 devido ao grau de preferência.
@@ -209,8 +197,7 @@ devido ao grau de preferência.
 \end{figure}
 
 \section{Pergunta h}
-\textbf{Que informação é possível obter, via DNS, acerca de whitehouse.gov?}
-
+\textbf{Que informação é possível obter, via DNS, acerca de whitehouse.gov?}\\
 Para obter o maior número de informações, via DNS, acerca de whitehouse.gov
 utilizamos o comando nslookup e o resultado está presente na figura 
 \ref{fig:www.whitehouse.gov}.
@@ -226,9 +213,8 @@ utilizamos o comando nslookup e o resultado está presente na figura
 \textbf{Consegue interrogar o DNS sobre o endereço IPv6
 2001:690:a00:1036:1113::247 usando algum dos clientes DNS? Que informação
 consegue obter? Supondo que teve problemas com esse endereço, consegue obter um
-contacto do responsável por esse IPv6?}
-
-Analisando a figura abaixo, verificamos que é possivel interrogar o DNS usando o
+contacto do responsável por esse IPv6?}\\
+Analisando a figura abaixo, verificamos que é possível interrogar o DNS usando o
 cliente DNS nslookup, no entanto obtemos poucas informações e uma reposta não
 autoritativa.
 
@@ -238,8 +224,7 @@ autoritativa.
     \caption{interrogação nslookup com endereço IPv6}
     \label{fig:nslookup_ipv6}
 \end{figure}
-
-Com o objetivo de obter um contacto responsáve pelo IPv6, utilizamos
+Com o objetivo de obter um contacto responsável pelo IPv6, utilizamos
 o comando nslookup com uma query do tipo SOA. Observando o resultado
 na figura abaixo, reparamos que o contacto responsável por esse IPv6 
 é o ns01.fccn.pt.
@@ -256,8 +241,7 @@ na figura abaixo, reparamos que o contacto responsável por esse IPv6
 para se atualizarem automaticamente a partir do primário, usando os parâmetros
 definidos no Record do tipo SOA do domínio. Descreve sucintamente esse mecanismo
 com base num exemplo concreto (ex: di.uminho.pt ou o domínio cc.pt que vai ser
-criado na topologia virtual).}
-
+criado na topologia virtual).}\\
 Através do mecanismo de transferência de zona permite que se replique a base de 
 dados do servidor primário para o secundário. Para isso, o servidor primário
 será requisitado pelo secundário para fazer essa transferência. Analisando os 
@@ -270,7 +254,6 @@ Esse campo diz nos o tempo em segundos que demorará o slave a voltar a tentar
 caso algo falhe.
 
 \chapter{Parte 2}
-
 \begin{figure}[H]
     \centering 
     \includegraphics[width=0.8\textwidth]{images/primary_ncl.png}  
@@ -336,7 +319,7 @@ o nosso conhecimento relativamente à área de serviço de resolução de nomes
 (DNS). No decorrer desta TP foi nos pedido para colocar em prática os 
 conceitos aprendidos nas aulas teóricas.
 Comparando as duas partes deste trabalho prático, a que se mostrou mais 
-dificil de realizar foi a segunda parte, pois foi o primeiro contacto que
+difícil de realizar foi a segunda parte, pois foi o primeiro contacto que
 tivemos com esta área. Contudo, achamos que conseguimos realizar todas as
 tarefas com sucesso sendo que todas as funcionalidades estão implementadas.
 
