@@ -1,0 +1,47 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "cc.pt" {
+	type slave;
+	file "/var/cache/bind/db.cc.pt";
+	masters { 
+		10.3.3.1;
+	};
+};
+
+zone "1.1.10.in-addr.arpa" {
+	type slave;
+	file "/var/cache/bind/db.1-1-10.rev";
+	masters {
+		10.3.3.1;
+	};
+};
+
+zone "2.2.10.in-addr.arpa" {
+	type slave;
+	file "/var/cache/bind/db.2-2-10.rev";
+	masters {
+		10.3.3.1;
+	};
+};
+
+zone "3.3.10.in-addr.arpa" {
+	type slave;
+	file "/var/cache/bind/db.3-3-10.rev";
+	masters {
+		10.3.3.1;
+	};
+};
+
+zone "4.4.10.in-addr.arpa" {
+	type slave;
+	file "/var/cache/bind/db.4-4-10.rev";
+	masters {
+		10.3.3.1;
+	};
+};

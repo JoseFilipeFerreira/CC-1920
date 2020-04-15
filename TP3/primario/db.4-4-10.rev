@@ -1,0 +1,17 @@
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	Serv1.cc.pt. Grupo07.cc.pt. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+@	IN	NS	Serv1.cc.pt.
+@	IN	NS	Hermes.cc.pt.
+;
+1	IN	PTR	Hermes.cc.pt.
+2	IN	PTR	Zeus.cc.pt.
+3	IN	PTR	Atena.cc.pt.
