@@ -2,6 +2,7 @@
 
 ## Index
 * [Transport Layer Protocols](TP1)
+* [TP2](TP2)
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)
