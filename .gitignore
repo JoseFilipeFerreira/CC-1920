@@ -4,3 +4,7 @@
 *.out
 *.pdf
 *.log
+
+#Rust
+target/
+Cargo.lock
