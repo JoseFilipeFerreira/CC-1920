@@ -3,7 +3,7 @@
 \usepackage[portuguese]{babel}
 \usepackage{hyperref}
 \usepackage{a4wide}
-\hypersetup{pdftitle={CC - TP03},
+\hypersetup{pdftitle={CC - TP02},
 pdfauthor={João Teixeira, José Ferreira, Miguel Solino},
 colorlinks=true,
 urlcolor=blue,
@@ -33,7 +33,7 @@ linkcolor=black}
 \begin{document}
 
 \title{Comunicação por Computadores\\ 
-\large Fase 3 - Grupo 7}
+\large Fase 2 - Grupo 7}
 \author{José Ferreira (A83683) \and João Teixeira (A85504) \and Miguel Solino (A86435)}
 \date{\today}
 
@@ -57,7 +57,59 @@ linkcolor=black}
 \chapter{Arquitetura da Solução}
 
 \chapter{Especificações do protocolo UDP}
-\section{Formato de Mensagens Protocolares (PDU)}
+\chapter{Formato de Mensagens Protocolares (PDU)}
+
+Cada PDU é composto por oito campos, sete para o header e um ultímo
+para o conteudo a transmitir. Um PDU tem um tamanho máximo de 4096,
+e, o conteudo de cada um é, no máximo 1792 bytes, para dar espaço
+para a encriptação do mesmo. Caso o conteudo seja de tamanho 
+superior ao que um PDU é capaz de transmitir, este será fragmentado
+e identificado de forma a que seja possível a junção de todos os
+fragmentos.
+
+\section{Header}
+
+\subsection{id}
+Este campo identifica sequencialmente cada leitura de uma socket TCP,
+tanto originados pelo cliente como pelo servidor de destino. Também 
+tem a finalidade de sincronização nas threads de escrita para uma
+socket TCP, garantindo assim que pacotes são entregues de forma ordenada.
+
+\subsection{total_blocks}
+Tendo em conta a possível fragmentação do conteudo por multiplos PDUs,
+este campo tem a informação do número total de PDUs criados para alojar
+todo o conteudo desejado.
+
+\subsection{block_number}
+Aquando da fragmentação do conteudo por vários PDUs, é atribuido sequencialmente
+um identificador de cada fragmento, começando em 0, até \textit{total_blocks
+- 1}, para ser possível a reconstrução do conteudo fragmentado, e assegurar
+a ordem do mesmo.
+
+\subsection{origin_id}
+Para ser possível diferenciar os pacotes e convenientemente entregues ao 
+destino, ao serem recebidos pelo túnel UDP, é guardada no PDU o IP do 
+Gateway que o enviou.
+
+\subsection{thread_id}
+Para ser possível diferenciar os PDUs provenientes do mesmo Gateway,
+é armazenado o identificador único da thread que enviou o PDU.
+
+\subsection{signature}
+De forma a ser possível verificar se o PDU foi adulterado ou proveniente
+de uma origem que não a desejada, este campo contém a hash do conteudo
+encriptada com a chave privada do Gateway que enviou o PDU.
+
+\subsection{kind}
+\begin{itemize}
+        \item Syn
+        \item SynAck
+        \item Content
+        \item Ack
+        \item Fin
+        \item FinAck
+\end{itemize}
+
 
 \section{Interações}
 
