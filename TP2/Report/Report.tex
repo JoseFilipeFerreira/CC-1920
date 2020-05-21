@@ -59,6 +59,17 @@ linkcolor=black}
     \end{minipage}
 \end{center}
 
+\pagebreak
+
+\begin{abstract}
+    \begin{center}
+        Este projeto tem como finalidade implementar uma rede de anonimização de
+        trafego TCP, com recurso a um túnel UDP entre os diferentes nós da rede.
+    \end{center}
+\end{abstract}
+
+\tableofcontents
+
 \chapter{Introdução}
 
 \chapter{Arquitetura da Solução}
@@ -104,7 +115,7 @@ todo o conteudo desejado.
 \subsection{block\_number}
 
 Aquando da fragmentação do conteudo por vários PDUs, é atribuido sequencialmente
-um identificador de cada fragmento, começando em 0, até \textit{total_blocks
+um identificador de cada fragmento, começando em 0, até \textit{total\_blocks
 - 1}, para ser possível a reconstrução do conteudo fragmentado, e assegurar
 a ordem do mesmo.
 
