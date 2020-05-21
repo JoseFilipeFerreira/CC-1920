@@ -101,15 +101,39 @@ de uma origem que não a desejada, este campo contém a hash do conteudo
 encriptada com a chave privada do Gateway que enviou o PDU.
 
 \subsection{kind}
+Para diferenciar os diferentes tipos de PDU, cada PDU tem um campo
+com a informação de a que tipo corresponte, com um dos tipos abaixo
+listados, para poder ser tratado da forma correta pelo Gateway de 
+destino.
 \begin{itemize}
         \item Syn
         \item SynAck
         \item Content
+        \item Reply
         \item Ack
         \item Fin
         \item FinAck
 \end{itemize}
 
+Os pacotes de tipo \textit{Syn} marcam o início de uma conecção, enviado
+pelo Gateway ao qual o cliente se ligou por TCP. Os \textit{SynAck}
+é a resposta do Gateway que se vai ligar por TCP ao servidor de destino
+a um PDU do tipo \textit{Syn}.
+
+Um PDU do tipo \textit{Content} é responsável pela transmição do conteudo
+de um request TCP proveniente do cliente. Estes PDUs apenas têm origem
+no Gateway onde o cliente TCP se conectou. Um PDU do tipo \textit{Reply}
+é um PDU análogo ao um do tipo \textit{Content}, mas este apenas tem origem
+no Gateway conectado ao servidor de destino.
+
+Os PDU do tipo \textit{Ack} são transmitido com o campo do \textit{content}
+vazio, e é enviado como confirmação da receção de outros PDUs.
+
+Os PDU do tipo \textit{Fin} e \textit{FinAck} marcam o fim da transmição,
+e são enviados quando a socket TCP do cliente ou do servidor são fechadas.
+Os do tipo \textit{Fin} são enviados pelo Gateway incial quando é o 
+cliente a fechar a conecção, e os \textit{FinAck} são enviados pelo Gateway
+conectados ao servidor de destino, quando este fecha a conecção TCP.
 
 \section{Interações}
 
