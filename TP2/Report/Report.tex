@@ -64,7 +64,7 @@ linkcolor=black}
 \begin{abstract}
     \begin{center}
         Este projeto tem como finalidade implementar uma rede de anonimização de
-        trafego TCP, com recurso a um túnel UDP entre os diferentes nós da rede.
+        tráfego TCP, com recurso a um túnel UDP entre os diferentes nós da rede.
     \end{center}
 \end{abstract}
 
@@ -80,21 +80,21 @@ UDP, interligadas entre um buffer comum a ambas as partes.
 
 Por cada cliente que se liga ao Gateway por TCP, são criadas duas threads, 
 uma para lidar com a leitura e outra para lidar com a escrita, de forma
-a permitir o tratamento de ambos os fluxos de forma assincrona. Também no
+a permitir o tratamento de ambos os fluxos de forma assíncrona. Também no
 Gateway de destino são criadas duas threads para a mesma finalidade, mas 
 desta vez, para lidar com os fluxos de leitura e escrita do servidor.
 
 Para lidar com os pacotes provenientes de outros Gateway pelo túnel UDP,
-é também criada uma thread onde os PDUs sao tratados e encaminhados
+é também criada uma thread onde os PDUs são tratados e encaminhados
 para a respetiva socket TCP.
 
 \chapter{Especificações do protocolo UDP}
 \section{Formato de Mensagens Protocolares (PDU)}
 
-Cada PDU é composto por oito campos, sete para o header e um ultímo
-para o conteudo a transmitir. Um PDU tem um tamanho máximo de 4096,
-e, o conteudo de cada um é, no máximo 1792 bytes, para dar espaço
-para a encriptação do mesmo. Caso o conteudo seja de tamanho 
+Cada PDU é composto por oito campos, sete para o header e um ultimo
+para o conteúdo a transmitir. Um PDU tem um tamanho máximo de 4096,
+e, o conteúdo de cada um é, no máximo 1792 bytes, para dar espaço
+para a encriptação do mesmo. Caso o conteúdo seja de tamanho 
 superior ao que um PDU é capaz de transmitir, este será fragmentado
 e identificado de forma a que seja possível a junção de todos os
 fragmentos.
@@ -108,15 +108,15 @@ socket TCP, garantindo assim que pacotes são entregues de forma ordenada.
 
 \subsection{total\_blocks}
 
-Tendo em conta a possível fragmentação do conteudo por multiplos PDUs,
+Tendo em conta a possível fragmentação do conteúdo por múltiplos PDUs,
 este campo tem a informação do número total de PDUs criados para alojar
-todo o conteudo desejado.
+todo o conteúdo desejado.
 
 \subsection{block\_number}
 
-Aquando da fragmentação do conteudo por vários PDUs, é atribuido sequencialmente
+Aquando da fragmentação do conteúdo por vários PDUs, é atribuído sequencialmente
 um identificador de cada fragmento, começando em 0, até \textit{total\_blocks
-- 1}, para ser possível a reconstrução do conteudo fragmentado, e assegurar
+- 1}, para ser possível a reconstrução do conteúdo fragmentado, e assegurar
 a ordem do mesmo.
 
 \subsection{origin\_id}
@@ -133,13 +133,13 @@ Para ser possível diferenciar os PDUs provenientes do mesmo Gateway,
 \subsection{signature}
 
 De forma a ser possível verificar se o PDU foi adulterado ou proveniente
-de uma origem que não a desejada, este campo contém a hash do conteudo
+de uma origem que não a desejada, este campo contém a hash do conteúdo
 encriptada com a chave privada do Gateway que enviou o PDU.
 
 \subsection{kind}
 
 Para diferenciar os diferentes tipos de PDU, cada PDU tem um campo
-com a informação de a que tipo corresponte, com um dos tipos abaixo
+com a informação de a que tipo corresponde, com um dos tipos abaixo
 listados, para poder ser tratado da forma correta pelo Gateway de 
 destino.
 \begin{itemize}
@@ -152,12 +152,12 @@ destino.
         \item FinAck
 \end{itemize}
 
-Os pacotes de tipo \textit{Syn} marcam o início de uma conecção, enviado
+Os pacotes de tipo \textit{Syn} marcam o início de uma conexão, enviado
 pelo Gateway ao qual o cliente se ligou por TCP. Os \textit{SynAck}
 é a resposta do Gateway que se vai ligar por TCP ao servidor de destino
 a um PDU do tipo \textit{Syn}.
 
-Um PDU do tipo \textit{Content} é responsável pela transmição do conteudo
+Um PDU do tipo \textit{Content} é responsável pela transmissão do conteúdo
 de um request TCP proveniente do cliente. Estes PDUs apenas têm origem
 no Gateway onde o cliente TCP se conectou. Um PDU do tipo \textit{Reply}
 é um PDU análogo ao um do tipo \textit{Content}, mas este apenas tem origem
@@ -166,15 +166,15 @@ no Gateway conectado ao servidor de destino.
 Os PDU do tipo \textit{Ack} são transmitido com o campo do \textit{content}
 vazio, e é enviado como confirmação da receção de outros PDUs.
 
-Os PDU do tipo \textit{Fin} e \textit{FinAck} marcam o fim da transmição,
+Os PDU do tipo \textit{Fin} e \textit{FinAck} marcam o fim da transmissão,
 e são enviados quando a socket TCP do cliente ou do servidor são fechadas.
-Os do tipo \textit{Fin} são enviados pelo Gateway incial quando é o 
-cliente a fechar a conecção, e os \textit{FinAck} são enviados pelo Gateway
-conectados ao servidor de destino, quando este fecha a conecção TCP.
+Os do tipo \textit{Fin} são enviados pelo Gateway inicial quando é o 
+cliente a fechar a conexão, e os \textit{FinAck} são enviados pelo Gateway
+conectados ao servidor de destino, quando este fecha a conexão TCP.
 
 \subsection{content}
 
-Este campo é onde é armazenado o conteudo (ou partes dele) a transmitir pelo
+Este campo é onde é armazenado o conteúdo (ou partes dele) a transmitir pelo
 túnel UDP, e tem limite de 1792 bytes por PDU, caso seja um pacote encriptado.
 
 \section{Interações}
@@ -187,29 +187,29 @@ túnel UDP, e tem limite de 1792 bytes por PDU, caso seja um pacote encriptado.
 
 Como linguagem de programação optamos por \textit{Rust}, pela sua sintaxe
 apelativa e descomplicada, uma biblioteca standard bastante completa e pela
-grande quantidade e qualidade de bibliotecas externas disponiveis. Também
+grande quantidade e qualidade de bibliotecas externas disponíveis. Também
 os mecanismos de segurança em acesso a memória partilhada entre threads,
 que acontece bastante na nossa solução do projeto, foram um fator que nos
 levaram a escolher esta linguagem.
 
 Para além da biblioteca standard de networking da linguagem, com o TCP
 listener, stream e UDP sockets, utilizamos também a biblioteca de 
-\textit{OpenSSL}, para lidar com o algorítmo \textit{RSA}, e a biblioteca
+\textit{OpenSSL}, para lidar com o algoritmo \textit{RSA}, e a biblioteca
 \textit{serd} e \textit{bincode}, para serialização dos PDUs para binário
-e transmição no túnel UDP, e para a operação inversa no destino. Utilizamos
+e transmissão no túnel UDP, e para a operação inversa no destino. Utilizamos
 também uma biblioteca \textit{structopt}, com a finalidade de ler e interpretar 
 os argumentos da linha de comandos.
 
-\section{Multiplexagem de clientes e escrita/leitura assincrona}
+\section{Multiplexagem de clientes e escrita/leitura assíncrona}
 
 De forma a conseguir atender vários clientes ao mesmo tempo por um Gateway,
 existe uma thread sempre a correr com o TCP Listener, e cada vez que um cliente
 se conecta ao Gateway são criadas duas threads, uma para leitura e uma para
-escrita, permitindo assim uma leitura e escrita assincrona e independente uma
+escrita, permitindo assim uma leitura e escrita assíncrona e independente uma
 da outra. 
 
 Para garantir o correto encaminhamento das mensagens recebidas no 
-túnel UDP, é atribuido um ID a cada cliente, utilizado para ir buscar
+túnel UDP, é atribuído um ID a cada cliente, utilizado para ir buscar
 as mensagens que a esta lhe dizem respeito, evitando diferentes clientes
 receberem mensagens trocadas.
 
@@ -225,9 +225,9 @@ um PDU pela socket TCP, esta é armazenada num buffer comum a todas as threads
 que tratam da escrita para a socket TCP.
 
 O buffer está implementado como sendo um \textit{HashMap}, sendo as chaves um 
-par do IP de origem do PDU e o ID da thread TCP da qual foi lido o conteudo 
-corresponte aos PDUs transmitidos. Para cada chave é associado um par que
-contem um vetor onde serão armazenados os PDUs, e uma variavél de condição,
+par do IP de origem do PDU e o ID da thread TCP da qual foi lido o conteúdo 
+correspondente aos PDUs transmitidos. Para cada chave é associado um par que
+contem um vetor onde serão armazenados os PDUs, e uma variável de condição,
 para a thread responsável por ler do buffer e enviar para a socket TCP correta
 ser notificada da existência de novos PDUs. A socket TCP irá ficar em espera
 até todos os PDUs da mensagem TCP estarem reunidos no buffer.
@@ -241,7 +241,7 @@ correspondentes. Cada thread responsável pela escrita para o TCP stream, tem
 também um contador incrementado sequencialmente a cada mensagem escrita para o
 stream. A thread de escrita para o stream apenas procura pelos PDUs com o ID
 correspondente ao que se encontra no seu contador. Assim que todo os PDUs com 
-esse ID estejam presentes no buffer, os PDUs são ordenados e o seu conteudo
+esse ID estejam presentes no buffer, os PDUs são ordenados e o seu conteúdo
 junto novamente para escrever para o stream.
 
 Como todos os pacotes recebidos de um lado têm que ser entregues do outro,
@@ -258,27 +258,27 @@ intervalo de tempo, que recomeça cada vez que um PDU de confirmação chega.
 Caso o tempo passe sem chegar nenhuma nova confirmação, os pacotes que ainda
 não chegou a confirmação de receção são retransmitidos.
 
-Os PDU de confirmação sao encaminhados para um buffer diferente, com o mesmo
+Os PDU de confirmação são encaminhados para um buffer diferente, com o mesmo
 tipo e funcionamento do descrito em \ref{sec:tcp}.
 
 \section{Confidencialidade e Assinatura digital}
 
 Para comprovar que o PDU é proveniente da origem correta, que não foi
-adulterado e que o conteudo se manteve confidencial durante a transmição,
-encriptamos e assinamos o PDU com recurso algorítmo de chaves públicas 
+adulterado e que o conteúdo se manteve confidencial durante a transmissão,
+encriptamos e assinamos o PDU com recurso algoritmo de chaves públicas 
 \textit{RSA}. 
 
-Para assegurar que a origem do PDU, é efetuada o \textit{hashing} do conteudo
+Para assegurar que a origem do PDU, é efetuada o \textit{hashing} do conteúdo
 com algoritmo \textit{SHA-2}, na variante de 512 bits, e em seguida, encriptada
 com a chave privada do Gateway de origem, garantindo assim a autenticação da
-origem, o não repudio e a integridade do conteudo. Para efetuar esta validação,
+origem, o não repudio e a integridade do conteúdo. Para efetuar esta validação,
 no gateway de destino, é feita a desencriptação da hash, e a comparação desta 
-com a hash do conteudo contido. Caso as duas hashs não sejam iguais, o PDU é
+com a hash do conteúdo contido. Caso as duas hashs não sejam iguais, o PDU é
 descartado.
 
-Para assegurar a confidencialidade do conteudo do PDU, este é encriptado com
+Para assegurar a confidencialidade do conteúdo do PDU, este é encriptado com
 recurso à chave pública do Gateway de destino, assegurando assim que este
-apenas pode ser desencriptado pelo correto destinatário. O conteudo é 
+apenas pode ser desencriptado pelo correto destinatário. O conteúdo é 
 encriptado em blocos de 128 bytes, e estes blocos após encriptados, são
 concatenados até ao tamanho máximo de um PDU e encaminhados para o túnel
 UDP.
