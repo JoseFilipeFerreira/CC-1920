@@ -72,12 +72,12 @@ linkcolor=black}
 
 \chapter{Introdução}
 
-O objetivo deste projeto é desenhar um protocolo de anonimização de trafego,
-a ser utilizado sobre UDP, e implementar gateways capaz de implementar o 
-protocolo desenhado, e formar uma rede capaz de anonimizar trafego TCP que
-chegue a qualquer um dos nós, sendo este invisível ao cliente que se liga,
-não sentindo qualquer diferença entre ligar se a um dos nós ou ao servidor
-de destino diretamente.
+O objetivo deste projeto é desenhar um protocolo de anonimização de tráfego
+a ser utilizado sobre UDP e implementar gateways capazes de implementar o 
+protocolo desenhado. Sendo que o objetivo final e formar uma rede capaz de
+anonimizar tráfego TCP que chegue a qualquer um dos nós, sendo este invisível ao
+cliente que se liga, não existindo qualquer diferença entre ligar se a um dos
+nós ou ao servidor de destino diretamente.
 
 O protocolo implementado tem que ser capaz de: 
 
@@ -90,8 +90,8 @@ O protocolo implementado tem que ser capaz de:
 \end{itemize}
 
 Ao longo deste relatório vamos apresentar a arquitetura da solução, explicar
-o protocolo desenhado e forma dos PDUs, entrar em maior detalhe sobre a
-implementação do protocolo e desenho dos gateways, e por fim apresentar os
+o protocolo desenhado e a forma dos PDUs, entrando em maior detalhe sobre a
+implementação do protocolo e o desenho dos gateways, e por fim apresentar os
 testes efetuados ao sistema.
 
 \chapter{Arquitetura da Solução}
@@ -102,13 +102,14 @@ UDP, interligadas entre um buffer comum a ambas as partes.
 
 Por cada cliente que se liga ao Gateway por TCP, são criadas duas threads, 
 uma para lidar com a leitura e outra para lidar com a escrita, de forma
-a permitir o tratamento de ambos os fluxos de forma assíncrona. Também no
-Gateway de destino são criadas duas threads para a mesma finalidade, mas 
-desta vez, para lidar com os fluxos de leitura e escrita do servidor.
+a permitir o tratamento de ambos os fluxos de forma assíncrona.
+
+Também no Gateway de destino são criadas duas threads para a mesma finalidade,
+mas desta vez, para lidar com os fluxos de leitura e escrita do servidor.
 
 Para lidar com os pacotes provenientes de outros Gateway pelo túnel UDP,
-é também criada uma thread onde os PDUs são tratados e encaminhados
-para a respetiva socket TCP.
+é também criada uma thread onde os PDUs são tratados e encaminhados para a
+respetiva socket TCP.
 
 \chapter{Especificações do protocolo UDP}
 \section{Formato de Mensagens Protocolares (PDU)}
@@ -164,6 +165,7 @@ Para diferenciar os diferentes tipos de PDU, cada PDU tem um campo
 com a informação de a que tipo corresponde, com um dos tipos abaixo
 listados, para poder ser tratado da forma correta pelo Gateway de 
 destino.
+
 \begin{itemize}
         \item Syn
         \item SynAck
@@ -185,8 +187,8 @@ no Gateway onde o cliente TCP se conectou. Um PDU do tipo \textit{Reply}
 é um PDU análogo ao um do tipo \textit{Content}, mas este apenas tem origem
 no Gateway conectado ao servidor de destino.
 
-Os PDU do tipo \textit{Ack} são transmitido com o campo do \textit{content}
-vazio, e é enviado como confirmação da receção de outros PDUs.
+Os PDUs do tipo \textit{Ack} são transmitidos com o campo do \textit{content}
+vazio, e são enviados como confirmação da receção de outros PDUs.
 
 Os PDU do tipo \textit{Fin} e \textit{FinAck} marcam o fim da transmissão,
 e são enviados quando a socket TCP do cliente ou do servidor são fechadas.
@@ -197,25 +199,25 @@ conectados ao servidor de destino, quando este fecha a conexão TCP.
 \subsection{content}
 
 Este campo é onde é armazenado o conteúdo (ou partes dele) a transmitir pelo
-túnel UDP, e tem limite de 1792 bytes por PDU, caso seja um pacote encriptado.
+túnel UDP, e tem limite de 1792 bytes por PDU caso seja um pacote encriptado.
 
 \section{Protocolo de comunicação entre Gateways}
 
-Todas as interaçoes entre os diferentes gateways são efetuadas atraves do túnel
-UDP, e estas interaçoes variam conforme o tipo de PDU, descritos em 
+Todas as interações entre os diferentes gateways são efetuadas atraves do túnel
+UDP, e estas interações variam conforme o tipo de PDU, descritos em 
 \ref{subs:kind}.
 
 \subsection{Protocolo de Início conexão}
 
-Para se establecer uma conexão entre dois nós, o nó no qual o cliente
+Para se estabelecer uma conexão entre dois nós, o nó no qual o cliente
 faz a ligação TCP envia para o nó escolhido um PDU do tipo \textit{Syn},
 com a sua chave pública no conteúdo e fica a aguardar o PDU de resposta 
 do tipo \textit{SynAck}.
 
-O nó de destino, ao receber um PDU do tipo \textit{Syn}, este guarda
-a chave pública da origem, abre a conexão TCP ao servidor de destino, e
+O nó de destino, ao receber um PDU do tipo \textit{Syn}, guarda
+a chave pública da origem, abre a conexão TCP ao servidor de destino e
 responde à origem com o PDU de resposta do tipo \textit{SynAck}, com a sua
-chave pública no conteudo.
+chave pública no conteúdo.
 
 Ao receber a resposta do nó de destino, a origem guarda também a chave
 pública do destino, e dá-se o início da troca de PDUs vindos das 
@@ -234,16 +236,16 @@ têm o tipo \textit{Content}, PDUs que fazem o caminho inverso têm o tipo
 PDUs deste tipo são encriptados e assinados antes de serem enviados, e no
 nó recetor vão ser validados e desencriptados.
 
-Depois de eviados estes PDUs, a origem fica à espera dos pacotes de confirmação
+Depois de enviados estes PDUs, a origem fica à espera dos pacotes de confirmação
 do tipo \textit{Ack}, e caso estes não cheguem, os PDUs que ainda não receberam
 confirmação serão reenviados.
 
 Caso algum PDU não passe a fase de validação, deve ser descartado e não deve
 ser enviada a confirmação de receção.
 
-\subsection{Protocolo de finaliização de conexão}
+\subsection{Protocolo de finalização de conexão}
 
-A finaliização da conexão entre dois nós é efetuada atraves de PDUs do tipo
+A finalização da conexão entre dois nós é efetuada através de PDUs do tipo
 \textit{Fin}, caso seja o cliente a fechar a conexão, ou \textit{FinAck},
 caso seja o servidor.
 
