@@ -274,11 +274,11 @@ os argumentos da linha de comandos.
 
 \section{Multiplexagem de clientes e escrita/leitura assíncrona}
 
-De forma a conseguir atender vários clientes ao mesmo tempo por um Gateway,
-existe uma thread sempre a correr com o TCP Listener, e cada vez que um cliente
-se conecta ao Gateway são criadas duas threads, uma para leitura e uma para
-escrita, permitindo assim uma leitura e escrita assíncrona e independente uma
-da outra. 
+De forma a conseguir atender vários clientes ao mesmo tempo através de um
+Gateway, existe uma thread sempre a correr com o TCP Listener, e cada vez que um
+cliente se conecta ao Gateway são criadas duas threads, uma para leitura e uma
+para escrita, permitindo assim uma leitura e escrita assíncrona e independente
+uma da outra. 
 
 Para garantir o correto encaminhamento das mensagens recebidas no 
 túnel UDP, é atribuído um ID a cada cliente, utilizado para ir buscar
@@ -345,8 +345,8 @@ com algoritmo \textit{SHA-2}, na variante de 512 bits, e em seguida, encriptada
 com a chave privada do Gateway de origem, garantindo assim a autenticação da
 origem, o não repudio e a integridade do conteúdo. Para efetuar esta validação,
 no gateway de destino, é feita a desencriptação da hash, e a comparação desta 
-com a hash do conteúdo contido. Caso as duas hashs não sejam iguais, o PDU é
-descartado.
+com a hash do conteúdo contido. Caso as duas \textit{hashs} não sejam iguais, o
+PDU é descartado.
 
 Para assegurar a confidencialidade do conteúdo do PDU, este é encriptado com
 recurso à chave pública do Gateway de destino, assegurando assim que este
@@ -372,9 +372,9 @@ implementado. Depois de resolvidos os problemas que este teste destacou,
 conseguimos também obter sucesso neste teste.
 
 Numa fase de testes finais, e para testar a capacidade de multiplexagem de
-clientes, tentamos testar nas condiçoes dos testes anteriores. Para isto,
+clientes, tentamos testar nas condições dos testes anteriores. Para isto,
 começamos por fazer dois pedidos ao mesmo gateway, primeiro de transferência de
-ficheiros, e depois de sessoes \textit{SSH}. Este teste demonstrou-nos que
+ficheiros, e depois de sessões \textit{SSH}. Este teste demonstrou-nos que
 a carga do túnel UDP abranda bastante as transferências, mas que as mensagens
 TCP eram transmitidas, mesmo que de forma mais lenta. 
 
@@ -387,12 +387,11 @@ foram realizados com sucesso.
 
 \chapter{Conclusões e Trabalho Futuro}
 
-Para finalizar, fazemos um balanço bastante positivo da solução obtida,
-conseguindo atingir todos os requisitos mínimos e opcionais propostos no
-enunciado.
+Concluindo, fazemos um balanço bastante positivo da solução obtida conseguindo
+atingir todos os requisitos mínimos e opcionais propostos no enunciado.
 
-Como trabalho futuro, gostariamos de utilizar para encriptação dos PDUs,
-uma terceira chave, simétrica, de sessão. Gostariamos também de implementar
+Como trabalho futuro, gostaríamos de utilizar para encriptação dos PDUs,
+uma terceira chave, simétrica, de sessão. Gostaríamos também de implementar
 controlo de congestão, para lidar melhor com a sobrecarga do túnel UDP. 
 
 \end{document}
