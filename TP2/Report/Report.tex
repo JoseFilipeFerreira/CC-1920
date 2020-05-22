@@ -72,6 +72,28 @@ linkcolor=black}
 
 \chapter{Introdução}
 
+O objetivo deste projeto é desenhar um protocolo de anonimização de trafego,
+a ser utilizado sobre UDP, e implementar gateways capaz de implementar o 
+protocolo desenhado, e formar uma rede capaz de anonimizar trafego TCP que
+chegue a qualquer um dos nós, sendo este invisível ao cliente que se liga,
+não sentindo qualquer diferença entre ligar se a um dos nós ou ao servidor
+de destino diretamente.
+
+O protocolo implementado tem que ser capaz de: 
+
+\begin{itemize}
+        \item Entregar de forma ordenada os dados que chegam ao sistema;
+        \item Cifrar o conteúdo transmitido de forma a evitar espionagem;
+        \item Ser capaz de lidar com mais do que um cliente ao mesmo tempo;
+        \item Controlar eventuais perdas de dados na transmissão entre nós;
+        \item Autenticação da origem dos pacotes transmitidos;
+\end{itemize}
+
+Ao longo deste relatório vamos apresentar a arquitetura da solução, explicar
+o protocolo desenhado e forma dos PDUs, entrar em maior detalhe sobre a
+implementação do protocolo e desenho dos gateways, e por fim apresentar os
+testes efetuados ao sistema.
+
 \chapter{Arquitetura da Solução}
 
 A nossa solução é dividida em duas grandes partes, a parte da comunicação
@@ -362,5 +384,13 @@ dos problemas resolvidos os problemas de diferenciação de PDUs, os testes
 foram realizados com sucesso.
 
 \chapter{Conclusões e Trabalho Futuro}
+
+Para finalizar, fazemos um balanço bastante positivo da solução obtida,
+conseguindo atingir todos os requisitos mínimos e opcionais propostos no
+enunciado.
+
+Como trabalho futuro, gostariamos de utilizar para encriptação dos PDUs,
+uma terceira chave, simétrica, de sessão. Gostariamos também de implementar
+controlo de congestão, para lidar melhor com a sobrecarga do túnel UDP. 
 
 \end{document}
