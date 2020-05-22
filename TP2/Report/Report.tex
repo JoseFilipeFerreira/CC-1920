@@ -333,6 +333,34 @@ UDP.
 
 \chapter{Testes e Resultados}
 
+Para testar a nossa solução utilizamos o emulador Core com a topologia utilizada
+nas aulas práticas, correndo dois gateways em duas máquinas distintas. Como
+teste inicial, começamos por correr numa terceira máquina um servidor 
+\textit{mini-http}, o servidor destino, e numa quarta máquina, o cliente,
+a partir da qual tentamos a transferência de um ficheiro do servidor destino.
+Para isso utilizamos o \textit{wget}, direcionando o pedido a um dos gateways.
+
+Vendo que este teste foi bem sucedido, passamos para tentar realizar uma
+sessão \textit{SSH} para o servidor de destino utilizado no teste anterior.
+Este teste pôs à prova a capacidade dos nossos gateways lerem e escreverem
+assincronamente no TCP stream, que numa fase inicial não tinha sido
+implementado. Depois de resolvidos os problemas que este teste destacou,
+conseguimos também obter sucesso neste teste.
+
+Numa fase de testes finais, e para testar a capacidade de multiplexagem de
+clientes, tentamos testar nas condiçoes dos testes anteriores. Para isto,
+começamos por fazer dois pedidos ao mesmo gateway, primeiro de transferência de
+ficheiros, e depois de sessoes \textit{SSH}. Este teste demonstrou-nos que
+a carga do túnel UDP abranda bastante as transferências, mas que as mensagens
+TCP eram transmitidas, mesmo que de forma mais lenta. 
+
+Depois destes testes, fizemos os mesmos testes que os anteriores, mas desta
+vez, cada máquina faz um pedido a um gateway diferente. Estes testes revelaram
+problemas ao nível do encaminhamento e diferenciação de PDUs por um gateway.
+Ainda com os mesmos problemas de lentidão com o aumento da carga, depois
+dos problemas resolvidos os problemas de diferenciação de PDUs, os testes
+foram realizados com sucesso.
+
 \chapter{Conclusões e Trabalho Futuro}
 
 \end{document}
