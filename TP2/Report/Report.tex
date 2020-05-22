@@ -136,7 +136,7 @@ De forma a ser possível verificar se o PDU foi adulterado ou proveniente
 de uma origem que não a desejada, este campo contém a hash do conteúdo
 encriptada com a chave privada do Gateway que enviou o PDU.
 
-\subsection{kind}
+\subsection{kind} \label{subs:kind}
 
 Para diferenciar os diferentes tipos de PDU, cada PDU tem um campo
 com a informação de a que tipo corresponde, com um dos tipos abaixo
@@ -177,9 +177,57 @@ conectados ao servidor de destino, quando este fecha a conexão TCP.
 Este campo é onde é armazenado o conteúdo (ou partes dele) a transmitir pelo
 túnel UDP, e tem limite de 1792 bytes por PDU, caso seja um pacote encriptado.
 
-\section{Interações}
+\section{Protocolo de comunicação entre Gateways}
 
+Todas as interaçoes entre os diferentes gateways são efetuadas atraves do túnel
+UDP, e estas interaçoes variam conforme o tipo de PDU, descritos em 
+\ref{subs:kind}.
 
+\subsection{Protocolo de Início conexão}
+
+Para se establecer uma conexão entre dois nós, o nó no qual o cliente
+faz a ligação TCP envia para o nó escolhido um PDU do tipo \textit{Syn},
+com a sua chave pública no conteúdo e fica a aguardar o PDU de resposta 
+do tipo \textit{SynAck}.
+
+O nó de destino, ao receber um PDU do tipo \textit{Syn}, este guarda
+a chave pública da origem, abre a conexão TCP ao servidor de destino, e
+responde à origem com o PDU de resposta do tipo \textit{SynAck}, com a sua
+chave pública no conteudo.
+
+Ao receber a resposta do nó de destino, a origem guarda também a chave
+pública do destino, e dá-se o início da troca de PDUs vindos das 
+extremidades TCP.
+
+Estes são os únicos PDUs que são enviados sem autenticação, todos os
+posteriores são encriptados e assinados como explicado em \ref{sec:auth}.
+
+\subsection{Protocolo de transmissão de mensagens TCP}
+
+A transmissão das mensagens TCP dá-se por PDUs do tipo \textit{Content} ou
+\textit{Reply}. PDUs que têm origem o cliente TCP e destino o servidor,
+têm o tipo \textit{Content}, PDUs que fazem o caminho inverso têm o tipo
+\textit{Reply}.
+
+PDUs deste tipo são encriptados e assinados antes de serem enviados, e no
+nó recetor vão ser validados e desencriptados.
+
+Depois de eviados estes PDUs, a origem fica à espera dos pacotes de confirmação
+do tipo \textit{Ack}, e caso estes não cheguem, os PDUs que ainda não receberam
+confirmação serão reenviados.
+
+Caso algum PDU não passe a fase de validação, deve ser descartado e não deve
+ser enviada a confirmação de receção.
+
+\subsection{Protocolo de finaliização de conexão}
+
+A finaliização da conexão entre dois nós é efetuada atraves de PDUs do tipo
+\textit{Fin}, caso seja o cliente a fechar a conexão, ou \textit{FinAck},
+caso seja o servidor.
+
+Aquando da receção de um PDU destes tipo, o Gateway deve fechar a conexão TCP
+respeitante à origem, e enviar um PDU de confirmação da receção deste, também
+do tipo \textit{Ack}.
 
 \chapter{Implementação}
 
@@ -261,7 +309,7 @@ não chegou a confirmação de receção são retransmitidos.
 Os PDU de confirmação são encaminhados para um buffer diferente, com o mesmo
 tipo e funcionamento do descrito em \ref{sec:tcp}.
 
-\section{Confidencialidade e Assinatura digital}
+\section{Confidencialidade e Assinatura digital} \label{sec:auth}
 
 Para comprovar que o PDU é proveniente da origem correta, que não foi
 adulterado e que o conteúdo se manteve confidencial durante a transmissão,
