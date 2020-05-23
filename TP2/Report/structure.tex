@@ -1,0 +1,31 @@
+%Requires:
+%\usepackage{tikz}
+%\usetikzlibrary{positioning,automata,decorations.markings}
+\begin{tikzpicture}[font=\ttfamily,auto]
+    \node[state,initial,accepting,text width=15mm,align=center] (client) {Client};
+    \node[state,text width=15mm,align=center] (cread) [right=2cm of client, yshift=-12mm] {Client Reader};
+    \node[state,text width=15mm,align=center] (cwr) [above=of cread] {Client Writer};
+    \node[state,text width=15mm,align=center] (g2) [right=2cm of cread] {Gateway 2};
+    \node[state,text width=15mm,align=center] (g1) [above=of g2] {Gateway 1};
+    \node[state,text width=15mm,align=center] (swr) [right=2cm of g2] {Server Writer};
+    \node[state,text width=15mm,align=center] (sread) [above=of swr] {Server Reader};
+    \node[state,text width=15mm,align=center] (serv) [right=2cm of swr, yshift=12mm] {Server};
+    \path[thick,->]
+    (client)     edge [post] node [anchor=south,below=0.2cm] {Tcp Stream} (cread)
+
+    (cread)      edge [post] node [anchor=north,below] {Udp Tunnel} (g2)
+
+    (g2)         edge [post] node {} (swr)
+
+    (swr)        edge [post] node [anchor=north,below=0.2cm] {Tcp Stream} (serv)
+
+    (serv)       edge [post] node [anchor=north,above=0.2cm] {Tcp Stream} (sread)
+
+    (sread)      edge [post] node [anchor=north,above] {Udp Tunnel} (g1)
+
+    (g1)         edge [post] node {} (cwr)
+
+    (cwr)        edge [post] node [anchor=west,above=0.2cm] {Tcp Stream} (client)
+
+    ;
+\end{tikzpicture}

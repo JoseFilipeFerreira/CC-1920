@@ -111,6 +111,12 @@ Para lidar com os pacotes provenientes de outros Gateway pelo túnel UDP,
 é também criada uma thread onde os PDUs são tratados e encaminhados para a
 respetiva socket TCP.
 
+\begin{figure}[H]
+    \hspace*{-2cm}
+    \input{structure.tex}
+    \caption{Fluxo de Informação na rede}\label{fig:structure}
+\end{figure}
+
 \chapter{Especificações do protocolo UDP}
 \section{Formato de Mensagens Protocolares (PDU)}
 
@@ -161,7 +167,7 @@ encriptada com a chave privada do Gateway que enviou o PDU.
 
 \subsection{kind} \label{subs:kind}
 
-Para diferenciar os diferentes tipos de PDU, cada PDU tem um campo
+Para diferenciar os diferentes tipos de PDU, está presente em cada um um campo
 com a informação de a que tipo corresponde, com um dos tipos abaixo
 listados, para poder ser tratado da forma correta pelo Gateway de 
 destino.
@@ -172,8 +178,9 @@ destino.
         \item Content
         \item Reply
         \item Ack
+        \item AckServ
         \item Fin
-        \item FinAck
+        \item FinServ
 \end{itemize}
 
 Os pacotes de tipo \textit{Syn} marcam o início de uma conexão, enviado
@@ -187,13 +194,15 @@ no Gateway onde o cliente TCP se conectou. Um PDU do tipo \textit{Reply}
 é um PDU análogo ao um do tipo \textit{Content}, mas este apenas tem origem
 no Gateway conectado ao servidor de destino.
 
-Os PDUs do tipo \textit{Ack} são transmitidos com o campo do \textit{content}
-vazio, e são enviados como confirmação da receção de outros PDUs.
+Os PDUs do tipo \textit{Ack} e \textit{AckServ} são transmitidos com o 
+campo do \textit{content} vazio, e são enviados como confirmação da 
+receção de outros PDUs. Os pacotes \textit{Ack} são enviados pelo gateway ligado
+ao cliente, e os \textit{AckServ} pelo ligado ao servidor de destino.
 
-Os PDU do tipo \textit{Fin} e \textit{FinAck} marcam o fim da transmissão,
+Os PDU do tipo \textit{Fin} e \textit{FinServ} marcam o fim da transmissão,
 e são enviados quando a socket TCP do cliente ou do servidor são fechadas.
 Os do tipo \textit{Fin} são enviados pelo Gateway inicial quando é o 
-cliente a fechar a conexão, e os \textit{FinAck} são enviados pelo Gateway
+cliente a fechar a conexão, e os \textit{FinServ} são enviados pelo Gateway
 conectados ao servidor de destino, quando este fecha a conexão TCP.
 
 \subsection{content}
@@ -237,8 +246,8 @@ PDUs deste tipo são encriptados e assinados antes de serem enviados, e no
 nó recetor vão ser validados e desencriptados.
 
 Depois de enviados estes PDUs, a origem fica à espera dos pacotes de confirmação
-do tipo \textit{Ack}, e caso estes não cheguem, os PDUs que ainda não receberam
-confirmação serão reenviados.
+do tipo \textit{Ack} ou \textit{AckServ}, dependendo da origem do PDU, e caso
+estes não cheguem, os PDUs que ainda não receberam confirmação serão reenviados.
 
 Caso algum PDU não passe a fase de validação, deve ser descartado e não deve
 ser enviada a confirmação de receção.
@@ -246,12 +255,12 @@ ser enviada a confirmação de receção.
 \subsection{Protocolo de finalização de conexão}
 
 A finalização da conexão entre dois nós é efetuada através de PDUs do tipo
-\textit{Fin}, caso seja o cliente a fechar a conexão, ou \textit{FinAck},
+\textit{Fin}, caso seja o cliente a fechar a conexão, ou \textit{FinServ},
 caso seja o servidor.
 
 Aquando da receção de um PDU destes tipo, o Gateway deve fechar a conexão TCP
 respeitante à origem, e enviar um PDU de confirmação da receção deste, também
-do tipo \textit{Ack}.
+do tipo \textit{Ack} ou \textit{AckServ}.
 
 \chapter{Implementação}
 
@@ -345,7 +354,7 @@ com algoritmo \textit{SHA-2}, na variante de 512 bits, e em seguida, encriptada
 com a chave privada do Gateway de origem, garantindo assim a autenticação da
 origem, o não repudio e a integridade do conteúdo. Para efetuar esta validação,
 no gateway de destino, é feita a desencriptação da hash, e a comparação desta 
-com a hash do conteúdo contido. Caso as duas \textit{hashs} não sejam iguais, o
+com a hash do conteúdo contido. Caso as duas \textit{hashes} não sejam iguais, o
 PDU é descartado.
 
 Para assegurar a confidencialidade do conteúdo do PDU, este é encriptado com
@@ -395,3 +404,4 @@ uma terceira chave, simétrica, de sessão. Gostaríamos também de implementar
 controlo de congestão, para lidar melhor com a sobrecarga do túnel UDP. 
 
 \end{document}
+
