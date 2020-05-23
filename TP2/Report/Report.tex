@@ -107,7 +107,7 @@ a permitir o tratamento de ambos os fluxos de forma assíncrona.
 Também no Gateway de destino são criadas duas threads para a mesma finalidade,
 mas desta vez, para lidar com os fluxos de leitura e escrita do servidor.
 
-Para lidar com os pacotes provenientes de outros Gateway pelo túnel UDP,
+Para lidar com os pacotes provenientes de outros Gateways pelo túnel UDP,
 é também criada uma thread onde os PDUs são tratados e encaminhados para a
 respetiva socket TCP.
 
@@ -122,11 +122,10 @@ respetiva socket TCP.
 
 Cada PDU é composto por oito campos, sete para o header e um ultimo
 para o conteúdo a transmitir. Um PDU tem um tamanho máximo de 4096,
-e, o conteúdo de cada um é, no máximo 1792 bytes, para dar espaço
-para a encriptação do mesmo. Caso o conteúdo seja de tamanho 
-superior ao que um PDU é capaz de transmitir, este será fragmentado
-e identificado de forma a que seja possível a junção de todos os
-fragmentos.
+e o conteúdo de cada um é no máximo 1792 bytes para dar espaço para a
+encriptação do mesmo. Caso o conteúdo seja de tamanho superior ao que um PDU é
+capaz de transmitir, este será fragmentado e identificado de forma a que seja
+possível a junção de todos os fragmentos.
 
 \subsection{id}
 
@@ -167,10 +166,9 @@ encriptada com a chave privada do Gateway que enviou o PDU.
 
 \subsection{kind} \label{subs:kind}
 
-Para diferenciar os diferentes tipos de PDU, está presente em cada um um campo
-com a informação de a que tipo corresponde, com um dos tipos abaixo
-listados, para poder ser tratado da forma correta pelo Gateway de 
-destino.
+De forma a ser possível diferenciar os diferentes tipos de PDU para estes serem
+tratados de forma correta pelo Gateway de destino foi criado um campo que contém
+um dos tipos abaixo listados.
 
 \begin{itemize}
         \item Syn
@@ -182,17 +180,6 @@ destino.
         \item Fin
         \item FinServ
 \end{itemize}
-
-Os pacotes de tipo \textit{Syn} marcam o início de uma conexão, enviado
-pelo Gateway ao qual o cliente se ligou por TCP. Os \textit{SynAck}
-é a resposta do Gateway que se vai ligar por TCP ao servidor de destino
-a um PDU do tipo \textit{Syn}.
-
-Um PDU do tipo \textit{Content} é responsável pela transmissão do conteúdo
-de um request TCP proveniente do cliente. Estes PDUs apenas têm origem
-no Gateway onde o cliente TCP se conectou. Um PDU do tipo \textit{Reply}
-é um PDU análogo ao um do tipo \textit{Content}, mas este apenas tem origem
-no Gateway conectado ao servidor de destino.
 
 Os PDUs do tipo \textit{Ack} e \textit{AckServ} são transmitidos com o 
 campo do \textit{content} vazio, e são enviados como confirmação da 
@@ -212,7 +199,7 @@ túnel UDP, e tem limite de 1792 bytes por PDU caso seja um pacote encriptado.
 
 \section{Protocolo de comunicação entre Gateways}
 
-Todas as interações entre os diferentes gateways são efetuadas atraves do túnel
+Todas as interações entre os diferentes gateways são efetuadas através do túnel
 UDP, e estas interações variam conforme o tipo de PDU, descritos em 
 \ref{subs:kind}.
 
@@ -238,7 +225,7 @@ posteriores são encriptados e assinados como explicado em \ref{sec:auth}.
 \subsection{Protocolo de transmissão de mensagens TCP}
 
 A transmissão das mensagens TCP dá-se por PDUs do tipo \textit{Content} ou
-\textit{Reply}. PDUs que têm origem o cliente TCP e destino o servidor,
+\textit{Reply}. PDUs que têm origem no cliente TCP e destino o servidor,
 têm o tipo \textit{Content}, PDUs que fazem o caminho inverso têm o tipo
 \textit{Reply}.
 
@@ -331,15 +318,15 @@ assim a ordem de entrega.
 
 \section{Controlo de perdas}
 
-Para evitar as perdas de PDUs e garantir que todos chegam ao destino, a cada 
-PDU recebido no túnel UDP, é enviado em reposta a este um outro com a
-informação de que chegou ao destino e é válido. O Gateway que envia o PDU
+De forma a evitar perdas de PDUs garantindo assim que todos chegam ao seu
+destino, sempre que um é recebido no túnel UDP, é enviado em reposta outro com a
+informação de que chegou ao destino e que é válido. O Gateway que envia o PDU
 fica à espera que estes PDUs de confirmação cheguem, durante um determinado
 intervalo de tempo, que recomeça cada vez que um PDU de confirmação chega.
 Caso o tempo passe sem chegar nenhuma nova confirmação, os pacotes que ainda
-não chegou a confirmação de receção são retransmitidos.
+não obtiveram a confirmação de receção são retransmitidos.
 
-Os PDU de confirmação são encaminhados para um buffer diferente, com o mesmo
+Os PDUs de confirmação são encaminhados para um buffer diferente, com o mesmo
 tipo e funcionamento do descrito em \ref{sec:tcp}.
 
 \section{Confidencialidade e Assinatura digital} \label{sec:auth}
