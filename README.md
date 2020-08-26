@@ -2,7 +2,8 @@
 
 ## Index
 * [Transport Layer Protocols](TP1)
-* [TP2](TP2)
+* [Anonimização de Tráfego](TP2)
+* [Serviço de Resolução de Nomes](TP3)
 
 ## Authors
 * [João Teixeira](https://github.com/jtexeira)
